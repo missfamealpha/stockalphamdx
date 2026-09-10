@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>สต็อก Alpha MDX</title>
+<meta name="description" content="สต็อกอุปกรณ์และน้ำยาตรวจ Alpha MDX — ซิงค์อัตโนมัติจาก Google Sheet">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --ground:#FCFCF4;
+    --band:#F6F6C9;
+    --band-ink:#1B3050;
+    --band-sub:#5C6B47;
+    --band-kick:#2A6E64;
+    --band-line:#E2E3BE;
+    --card:#FFFFFF;
+    --card-2:#FAFAF2;
+    --ink:#153462;
+    --ink-2:#41597B;
+    --ink-3:#77848C;
+    --line:#E6E7DC;
+    --line-2:#CFD5C4;
+    --accent:#153462;
+    --accent-soft:#E4E9F2;
+    --teal:#2C7D71;
+    --sage:#BAD1C2;
+    --sage-soft:#EAF1EC;
+    --ok:#2C7D71;
+    --low:#8A5E15;
+    --low-soft:#F5EAC8;
+    --out:#A6383B;
+    --out-soft:#F8E3E2;
+    --none:#77848C;
+    --shadow:0 1px 2px rgba(21,52,98,.05), 0 8px 22px -16px rgba(21,52,98,.3);
+    --barH:150px;
+    --r:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0A1830;
+      --band:#122747;
+      --band-ink:#F1F2DC;
+      --band-sub:#A9BCA6;
+      --band-kick:#79C6BA;
+      --band-line:#1E3A5F;
+      --card:#132746;
+      --card-2:#0F2140;
+      --ink:#EFF1DC;
+      --ink-2:#B5C6C4;
+      --ink-3:#8B9CA6;
+      --line:#20395C;
+      --line-2:#2C4A73;
+      --accent:#A6C6EC;
+      --accent-soft:#17304F;
+      --teal:#79C6BA;
+      --sage:#4E8577;
+      --sage-soft:#13293D;
+      --ok:#6BC8B2;
+      --low:#DFB55E;
+      --low-soft:#3A2B10;
+      --out:#EE868A;
+      --out-soft:#3A1A1D;
+      --none:#8B9CA6;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0A1830;
+    --band:#122747;
+    --band-ink:#F1F2DC;
+    --band-sub:#A9BCA6;
+    --band-kick:#79C6BA;
+    --band-line:#1E3A5F;
+    --card:#132746;
+    --card-2:#0F2140;
+    --ink:#EFF1DC;
+    --ink-2:#B5C6C4;
+    --ink-3:#8B9CA6;
+    --line:#20395C;
+    --line-2:#2C4A73;
+    --accent:#A6C6EC;
+    --accent-soft:#17304F;
+    --teal:#79C6BA;
+    --sage:#4E8577;
+    --sage-soft:#13293D;
+    --ok:#6BC8B2;
+    --low:#DFB55E;
+    --low-soft:#3A2B10;
+    --out:#EE868A;
+    --out-soft:#3A1A1D;
+    --none:#8B9CA6;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -16px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  html{color-scheme:light dark}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"IBM Plex Sans Thai","Noto Sans Thai",system-ui,-apple-system,sans-serif;
+    font-size:15px;line-height:1.45;
+    -webkit-text-size-adjust:100%;
+  }
+  img{max-width:100%}
+  [hidden]{display:none!important}
+  .num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+  /* ---------- brand band ---------- */
+  .band{background:var(--band);border-bottom:1px solid var(--band-line)}
+  .band .inner{max-width:600px;margin:0 auto;padding:18px 16px 15px}
+  .kicker{
+    margin:0 0 6px;color:var(--band-kick);
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;font-weight:600;letter-spacing:.18em;
+  }
+  .band h1{
+    font-family:Anuphan,"IBM Plex Sans Thai",system-ui,sans-serif;
+    font-weight:700;font-size:25px;line-height:1.18;margin:0;
+    letter-spacing:-.005em;color:var(--band-ink);text-wrap:balance;
+  }
+
+  .callout{
+    display:flex;align-items:center;gap:12px;width:100%;
+    margin-top:14px;padding:12px 14px;
+    background:var(--card);color:var(--ink);
+    border:1px solid var(--band-line);border-left:4px solid var(--out);
+    border-radius:10px;font:inherit;text-align:left;cursor:pointer;
+    transition:box-shadow .15s, transform .05s;
+  }
+  .callout:active{transform:scale(.995)}
+  .callout .co-n{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;
+    font-size:29px;font-weight:600;line-height:1;color:var(--out);
+  }
+  .callout .co-t{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .callout .co-t b{font-size:14px;font-weight:600}
+  .callout .co-t span{font-size:11.5px;color:var(--ink-3)}
+  .callout .co-go{margin-left:auto;color:var(--ink-3);font-size:17px;line-height:1}
+  .callout[aria-pressed="true"]{border-color:var(--out);box-shadow:0 0 0 3px var(--out-soft)}
+  .callout.clear{border-left-color:var(--ok)}
+  .callout.clear .co-n{color:var(--ok)}
+
+  .syncline{
+    margin:11px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+    color:var(--band-sub);font-size:12px;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--none);flex:0 0 6px}
+  .syncline.live .dot{background:var(--ok)}
+  .syncline.stale .dot{background:var(--low)}
+  #refresh{
+    font:inherit;font-size:12px;color:var(--band-kick);background:transparent;border:0;
+    padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:2px;
+  }
+
+  .wrap{max-width:600px;margin:0 auto;padding:0 16px 60px}
+
+  /* ---------- sticky controls ---------- */
+  .bar{
+    position:sticky;top:0;z-index:20;background:var(--ground);
+    padding:11px 0 9px;display:flex;flex-direction:column;gap:8px;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .search{position:relative;display:flex;align-items:center}
+  .search svg{position:absolute;left:12px;width:16px;height:16px;color:var(--ink-3);pointer-events:none}
+  #q{
+    width:100%;font:inherit;font-size:16px;color:var(--ink);
+    background:var(--card);border:1px solid var(--line-2);border-radius:11px;
+    padding:11px 40px 11px 36px;-webkit-appearance:none;appearance:none;
+  }
+  #q::placeholder{color:var(--ink-3)}
+  #q::-webkit-search-cancel-button,#q::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+  #q:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  #clear{
+    position:absolute;right:6px;border:0;background:transparent;color:var(--ink-3);
+    font:inherit;font-size:18px;line-height:1;padding:8px 10px;cursor:pointer;border-radius:8px;
+  }
+  #clear[hidden]{display:none!important}
+
+  .chiprow{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .chiprow::-webkit-scrollbar{display:none}
+  .chip{
+    flex:0 0 auto;font:inherit;background:var(--card);color:var(--ink-2);
+    border:1px solid var(--line-2);border-radius:999px;cursor:pointer;white-space:nowrap;
+    transition:background .14s,color .14s,border-color .14s;
+  }
+  .chip .n{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;
+    margin-left:5px;opacity:.6;
+  }
+  /* primary: segmented control */
+  .row-st{
+    display:flex;gap:2px;overflow:visible;
+    background:var(--card);border:1px solid var(--line-2);border-radius:11px;padding:3px;
+  }
+  .row-st .chip{
+    flex:1 1 0;min-width:0;border:0;border-radius:8px;background:transparent;
+    font-size:12.5px;font-weight:500;padding:7px 2px;text-align:center;
+  }
+  .row-st .chip .n{margin-left:4px;font-size:11px}
+  .row-st .chip[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+  .row-st .chip[aria-pressed="true"] .n{opacity:.7}
+  .row-st .chip[data-stat="need"][aria-pressed="true"]{background:var(--out);color:#fff}
+  /* secondary row: category */
+  .row-ct .chip{font-size:12.5px;padding:5px 11px;background:transparent;border-color:transparent;color:var(--ink-3)}
+  .row-ct .chip[aria-pressed="true"]{background:var(--sage-soft);border-color:var(--sage);color:var(--ink)}
+
+  .chip:focus-visible,#sort:focus-visible,#refresh:focus-visible,.row:focus-visible,.callout:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px
+  }
+
+  .metaline{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px 0}
+  .metaline .found{font-size:12px;color:var(--ink-3)}
+  .metaline .found b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600;color:var(--ink-2)}
+  #sort{font:inherit;font-size:12.5px;color:var(--accent);background:transparent;border:0;padding:4px 2px;cursor:pointer;border-radius:6px}
+
+  /* ---------- list ---------- */
+  .sec{margin-top:14px}
+  .sec > h2{
+    position:sticky;top:var(--barH);z-index:10;margin:0;padding:8px 2px 7px;
+    background:linear-gradient(var(--ground) 74%, transparent);
+    font-size:12.5px;font-weight:600;color:var(--ink-2);
+    display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  }
+  .sec > h2 .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;font-size:11.5px;color:var(--ink-3)}
+  .group{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+  .row{
+    display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+    font:inherit;color:inherit;background:transparent;border:0;
+    border-top:1px solid var(--line);padding:11px 13px 11px 0;cursor:pointer;
+  }
+  .row:first-child{border-top:0}
+  .row::before{content:"";width:3px;align-self:stretch;flex:0 0 3px;background:var(--stripe,transparent)}
+  .row .name{flex:1 1 auto;min-width:0;font-size:14px;line-height:1.35;overflow-wrap:anywhere;padding-left:10px}
+  .row .note{display:block;font-size:11.5px;color:var(--ink-3);margin-top:2px}
+  .row:hover{background:var(--card-2)}
+  .delta{
+    flex:0 0 auto;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+    color:var(--ink-3);font-variant-numeric:tabular-nums;
+  }
+  .delta.dn{color:var(--out)}
+  .delta.up{color:var(--ok)}
+  .qty{
+    flex:0 0 auto;min-width:52px;text-align:center;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;
+    font-size:15px;font-weight:600;
+  }
+  /* ปริมาณพอใช้ = ตัวเลขเปล่า, ที่ต้องสั่ง = ป้ายมีพื้นสี */
+  .s-ok   .qty{color:var(--ink)}
+  .s-low  .qty{background:var(--low-soft);color:var(--low);border-radius:8px;padding:3px 9px}
+  .s-low       {--stripe:var(--low)}
+  .s-out  .qty{
+    background:var(--out-soft);color:var(--out);border-radius:8px;padding:3px 9px;
+    font-family:"IBM Plex Sans Thai",system-ui,sans-serif;font-size:12.5px;
+  }
+  .s-out       {--stripe:var(--out)}
+  .s-none .qty{color:var(--ink-3);font-weight:400}
+  .s-none .name{color:var(--ink-2)}
+
+  .subhead{
+    display:flex;align-items:center;gap:8px;padding:9px 13px 8px;
+    background:var(--sage-soft);border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--ink-3);
+  }
+  .subhead::after{content:"";flex:1;height:1px;background:var(--sage)}
+
+  .empty{
+    text-align:center;padding:44px 20px;color:var(--ink-3);
+    background:var(--card);border:1px dashed var(--line-2);border-radius:var(--r);margin-top:14px;
+  }
+  .empty strong{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+
+  /* ---------- duplicates panel ---------- */
+  .dupbox{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--r);overflow:hidden;
+  }
+  .dupbox summary{
+    padding:12px 14px;cursor:pointer;font-size:13px;color:var(--ink-2);
+    display:flex;align-items:center;gap:8px;list-style:none;
+  }
+  .dupbox summary::-webkit-details-marker{display:none}
+  .dupbox summary::after{content:"›";margin-left:auto;color:var(--ink-3);font-size:17px}
+  .dupbox[open] summary::after{content:"⌄"}
+  .dupbox summary b{font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--low)}
+  .dupbody{padding:0 14px 14px;font-size:12.5px;color:var(--ink-2)}
+  .dupbody p{margin:0 0 10px;color:var(--ink-3);font-size:11.5px;line-height:1.6}
+  .dupg{border-top:1px solid var(--line);padding:8px 0 2px}
+  .dupg div{display:flex;gap:8px;align-items:baseline;padding:2px 0}
+  .dupg div span{flex:1 1 auto;overflow-wrap:anywhere}
+  .dupg div em{
+    flex:0 0 auto;font-style:normal;font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+  }
+
+  footer{margin-top:20px;padding:14px 2px 0;border-top:1px solid var(--line);color:var(--ink-3);font-size:11.5px;line-height:1.7}
+
+  #toast{
+    position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);
+    background:var(--ink);color:var(--ground);padding:9px 15px;border-radius:999px;font-size:13px;
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:88vw;text-align:center;
+  }
+  #toast.on{opacity:1;transform:translate(-50%,0)}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="inner">
+    <p class="kicker">ALPHA MDX</p>
+    <h1>สต็อกอุปกรณ์และน้ำยาตรวจ</h1>
+
+    <button class="callout" id="callout" type="button" aria-pressed="false">
+      <span class="co-n" id="coN">–</span>
+      <span class="co-t">
+        <b id="coTitle">ต้องสั่งซื้อ</b>
+        <span id="coSub"></span>
+      </span>
+      <span class="co-go">›</span>
+    </button>
+
+    <p class="syncline" id="syncline">
+      <span class="dot"></span><span id="synctext">กำลังโหลด…</span>
+      <button id="refresh" type="button">รีเฟรช</button>
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="bar" id="bar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+      <input id="q" type="search" inputmode="search" autocomplete="off" enterkeyhint="search" placeholder="ค้นหาชื่อสินค้า / น้ำยา / ยี่ห้อ">
+      <button id="clear" type="button" aria-label="ล้างคำค้นหา" hidden>&times;</button>
+    </div>
+    <div class="chiprow row-st" id="stats"></div>
+    <div class="chiprow row-ct" id="cats"></div>
+  </div>
+
+  <div class="metaline">
+    <span class="found" id="found"></span>
+    <button id="sort" type="button"></button>
+  </div>
+
+  <main id="list"></main>
+
+  <details class="dupbox" id="dupbox" hidden>
+    <summary>ชื่อที่อาจซ้ำกันในชีต <b id="dupN">0</b> กลุ่ม</summary>
+    <div class="dupbody">
+      <p>รายการเหล่านี้สะกดต่างกันแต่น่าจะเป็นของชิ้นเดียวกัน แอปแสดงตามชีตจริงทุกแถว ไม่ได้รวมยอดให้ — แนะนำให้รวมในชีตต้นทางเพื่อให้ตัวเลขคงเหลือเชื่อถือได้</p>
+      <div id="dupList"></div>
+    </div>
+  </details>
+
+  <footer>
+    ข้อมูลจากชีต <b>Stock Product Alpha</b> · ซิงค์อัตโนมัติทุกชั่วโมง 07:00–21:00 (เวลาไทย)<br>
+    แตะรายการเพื่อคัดลอกชื่อไปสั่งของ · <b>เหลือน้อย</b> = คงเหลือ 1–2 · <b>ยังไม่ระบุ</b> = ช่องคงเหลือว่างในชีต<br>
+    รายการที่ไม่ใช่ของในคลัง (ค่าใช้จ่าย แพ็คเกจตรวจ) แยกไว้ในหมวด <b>อื่นๆ</b> และไม่นับในยอดรวม
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ข้อมูลสต็อกอยู่ใน data.json ข้างไฟล์นี้ — GitHub Actions เขียนทับทุกชั่วโมงจาก Google Sheet */
+const DATA_URL = "data.json";
+
+const $ = s => document.querySelector(s);
+const CLS = {ok:"s-ok", low:"s-low", out:"s-out", none:"s-none"};
+
+function statOf(q){
+  if(q===null||q===undefined) return "none";
+  if(q===0) return "out";
+  if(q<=2) return "low";
+  return "ok";
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+const state = {q:"", cat:"all", stat:"all", sort:"cat"};
+try{
+  const v = JSON.parse(localStorage.getItem("alphamdx-stock")||"{}");
+  if(v.cat) state.cat = v.cat;
+  if(v.stat) state.stat = v.stat;
+  if(v.sort) state.sort = v.sort;
+}catch(e){}
+function save(){ try{ localStorage.setItem("alphamdx-stock", JSON.stringify(state)); }catch(e){} }
+
+/* ---------- dataset ---------- */
+let D = null;
+
+function prepare(raw){
+  const nonstock = raw.nonstock || [];
+  const prev = raw.prev || {};
+  const items = (raw.items||[]).map((it,i)=>{
+    const q = (it.q===null||it.q===undefined||it.q==="") ? null : Number(it.q);
+    const p = (it.n in prev && prev[it.n]!==null) ? Number(prev[it.n]) : null;
+    return {
+      n:String(it.n||""), q:q, c:it.c||"other", note:it.note||"", dup:it.dup||0,
+      i:i, s:statOf(q), k:String(it.n||"").toLowerCase(),
+      stock: nonstock.indexOf(it.c||"other") === -1,
+      d: (q!==null && p!==null && q!==p) ? q-p : 0
+    };
+  });
+  const labels = Object.assign({other:"อื่นๆ"}, raw.labels||{});
+  const order = (raw.order||[]).slice();
+  items.forEach(it=>{ if(order.indexOf(it.c)===-1) order.push(it.c); });
+  return {items, labels, order, nonstock, dupGroups: raw.dupGroups||[], syncedAt: raw.syncedAt||null};
+}
+
+const inScope = it => state.cat==="misc" ? !it.stock
+                    : state.cat==="all"  ? it.stock
+                    : it.c===state.cat;
+const matchStat = it => state.stat==="all"  ? true
+                      : state.stat==="need" ? (it.q!==null && it.q<=2)
+                      : state.stat==="ok"   ? (it.q!==null && it.q>2)
+                      : it.q===null;
+
+/* ---------- header ---------- */
+function fmtTime(iso){
+  if(!iso) return null;
+  const d = new Date(iso);
+  if(isNaN(d)) return null;
+  try{
+    return d.toLocaleString("th-TH",{timeZone:"Asia/Bangkok",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})+" น.";
+  }catch(e){ return d.toISOString().slice(0,16).replace("T"," "); }
+}
+function setSync(iso){
+  const el = $("#syncline");
+  el.classList.remove("live","stale");
+  const age = iso ? (Date.now()-new Date(iso).getTime()) : 0;
+  el.classList.add(age > 6*3600*1000 ? "stale" : "live");
+  const stockN = D.items.filter(i=>i.stock).length;
+  $("#synctext").textContent = "สินค้า "+stockN+" รายการ · ซิงค์จากชีต "+(fmtTime(iso)||"—");
+}
+function setCallout(){
+  const stock = D.items.filter(i=>i.stock);
+  const out = stock.filter(i=>i.q===0).length;
+  const low = stock.filter(i=>i.q!==null && i.q>0 && i.q<=2).length;
+  const need = out+low;
+  const c = $("#callout");
+  $("#coN").textContent = need;
+  if(need===0){
+    c.classList.add("clear");
+    $("#coTitle").textContent = "สต็อกครบ";
+    $("#coSub").textContent = "ไม่มีรายการที่ต้องสั่งเพิ่ม";
+  } else {
+    c.classList.remove("clear");
+    $("#coTitle").textContent = "รายการที่ต้องสั่งซื้อ";
+    $("#coSub").textContent = "หมด "+out+" · เหลือน้อย "+low;
+  }
+  c.setAttribute("aria-pressed", String(state.stat==="need" && state.cat==="all"));
+}
+
+/* ---------- filter chrome ---------- */
+function buildChips(){
+  const scope = D.items.filter(inScope);
+  const sc = [
+    {id:"all",  label:"ทั้งหมด", n:scope.length},
+    {id:"need", label:"ต้องสั่ง", n:scope.filter(i=>i.q!==null&&i.q<=2).length},
+    {id:"ok",   label:"มีของ", n:scope.filter(i=>i.q!==null&&i.q>2).length},
+    {id:"none", label:"ไม่ระบุ", n:scope.filter(i=>i.q===null).length}
+  ];
+  $("#stats").innerHTML = sc.map(s=>
+    `<button class="chip" type="button" data-stat="${s.id}" aria-pressed="false">${s.label}<span class="n">${s.n}</span></button>`
+  ).join("");
+
+  const counts = {};
+  D.items.forEach(i=>{ counts[i.c]=(counts[i.c]||0)+1; });
+  const stockCats = D.order.filter(c=>counts[c] && D.nonstock.indexOf(c)===-1);
+  const miscN = D.items.filter(i=>!i.stock).length;
+  const cc = [{id:"all",label:"ทุกหมวด",n:D.items.filter(i=>i.stock).length}]
+    .concat(stockCats.map(c=>({id:c,label:D.labels[c]||c,n:counts[c]})));
+  if(miscN) cc.push({id:"misc",label:"อื่นๆ",n:miscN});
+  $("#cats").innerHTML = cc.map(c=>
+    `<button class="chip" type="button" data-cat="${c.id}" aria-pressed="false">${c.label}<span class="n">${c.n}</span></button>`
+  ).join("");
+}
+function syncControls(){
+  document.querySelectorAll("#stats .chip").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.stat===state.stat)));
+  document.querySelectorAll("#cats .chip").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.cat===state.cat)));
+  setCallout();
+}
+
+/* ---------- rows ---------- */
+function qtyHTML(it){
+  if(it.q===null) return '<span class="qty">—</span>';
+  if(it.q===0)    return '<span class="qty">หมด</span>';
+  return '<span class="qty">'+it.q+'</span>';
+}
+function rowHTML(it){
+  const notes = [];
+  if(it.note) notes.push(esc(it.note));
+  if(it.dup>1) notes.push("รวม "+it.dup+" แถวในชีต");
+  const note = notes.length ? '<span class="note">'+notes.join(" · ")+'</span>' : "";
+  const delta = it.d ? '<span class="delta '+(it.d<0?"dn":"up")+'">'+(it.d<0?"▼":"▲")+Math.abs(it.d)+'</span>' : "";
+  return '<button class="row '+CLS[it.s]+'" type="button" data-name="'+esc(it.n)+'">'
+       + '<span class="name">'+esc(it.n)+note+'</span>'+delta+qtyHTML(it)+'</button>';
+}
+function block(items){
+  const known = items.filter(i=>i.q!==null);
+  const unknown = items.filter(i=>i.q===null);
+  let h = known.map(rowHTML).join("");
+  if(unknown.length){
+    h += '<div class="subhead">ยังไม่ระบุจำนวนในชีต · '+unknown.length+'</div>' + unknown.map(rowHTML).join("");
+  }
+  return '<div class="group">'+h+'</div>';
+}
+
+function render(){
+  const q = state.q.trim().toLowerCase();
+  const items = D.items.filter(it=> inScope(it) && matchStat(it) && (!q || it.k.indexOf(q)!==-1));
+  const scopeN = D.items.filter(inScope).length;
+
+  $("#found").innerHTML = (items.length===scopeN)
+    ? '<b>'+scopeN+'</b> รายการ'
+    : 'พบ <b>'+items.length+'</b> จาก '+scopeN+' รายการ';
+  $("#sort").textContent = state.sort==="cat" ? "เรียง: หมวดหมู่" : "เรียง: จำนวนน้อยสุด";
+
+  const list = $("#list");
+  if(!items.length){
+    list.innerHTML = '<div class="empty"><strong>ไม่พบรายการที่ตรงกัน</strong>ลองพิมพ์คำสั้นลง หรือกด “ทั้งหมด”</div>';
+    return;
+  }
+
+  if(state.sort==="qty"){
+    const sorted = items.slice().sort((a,b)=>{
+      const av = a.q===null?Infinity:a.q, bv = b.q===null?Infinity:b.q;
+      return av-bv || a.i-b.i;
+    });
+    list.innerHTML = '<section class="sec"><h2><span>เรียงจากจำนวนน้อยสุด</span><span class="n">'+sorted.length+'</span></h2>'+block(sorted)+'</section>';
+    return;
+  }
+
+  let html = "";
+  D.order.forEach(c=>{
+    const inCat = items.filter(i=>i.c===c);
+    if(!inCat.length) return;
+    inCat.sort((a,b)=>{
+      const av = a.q===null?-1:a.q, bv = b.q===null?-1:b.q;
+      return bv-av || a.i-b.i;
+    });
+    html += '<section class="sec"><h2><span>'+(D.labels[c]||c)+'</span><span class="n">'+inCat.length+'</span></h2>'+block(inCat)+'</section>';
+  });
+  list.innerHTML = html;
+}
+
+/* ---------- duplicates panel ---------- */
+function buildDup(){
+  const g = D.dupGroups;
+  const box = $("#dupbox");
+  if(!g.length){ box.hidden = true; return; }
+  box.hidden = false;
+  $("#dupN").textContent = g.length;
+  $("#dupList").innerHTML = g.map(grp=>
+    '<div class="dupg">'+grp.map(x=>
+      '<div><span>'+esc(x.n)+'</span><em>'+(x.q===null?"—":x.q)+'</em></div>'
+    ).join("")+'</div>'
+  ).join("");
+}
+
+/* ---------- apply ---------- */
+function apply(raw){
+  D = prepare(raw);
+  buildChips();
+  syncControls();
+  render();
+  buildDup();
+  setSync(D.syncedAt);
+  measure();
+}
+
+/* ---------- events ---------- */
+$("#stats").addEventListener("click", e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  state.stat = b.dataset.stat; save(); buildChips(); syncControls(); render();
+});
+$("#cats").addEventListener("click", e=>{
+  const b = e.target.closest(".chip"); if(!b) return;
+  state.cat = b.dataset.cat; save(); buildChips(); syncControls(); render();
+});
+$("#callout").addEventListener("click", ()=>{
+  if(!D) return;
+  const on = state.stat==="need" && state.cat==="all";
+  if(on){ state.stat="all"; state.sort="cat"; }
+  else   { state.stat="need"; state.cat="all"; state.sort="qty"; }
+  save(); buildChips(); syncControls(); render();
+  if(!on) $("#bar").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("#sort").addEventListener("click", ()=>{
+  if(!D) return;
+  state.sort = state.sort==="cat" ? "qty" : "cat"; save(); render();
+});
+const qEl = $("#q");
+qEl.addEventListener("input", ()=>{
+  state.q = qEl.value; $("#clear").hidden = !qEl.value; if(D) render();
+});
+$("#clear").addEventListener("click", ()=>{
+  qEl.value=""; state.q=""; $("#clear").hidden=true; if(D) render(); qEl.focus();
+});
+
+let toastT;
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove("on"),1700);
+}
+$("#list").addEventListener("click", e=>{
+  const r = e.target.closest(".row"); if(!r) return;
+  const name = r.dataset.name;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(name).then(()=>toast("คัดลอกแล้ว: "+name), ()=>toast(name));
+  } else toast(name);
+});
+$("#refresh").addEventListener("click", ()=>{
+  toast("กำลังโหลดข้อมูลล่าสุด…");
+  load();
+});
+
+const bar = $("#bar");
+function measure(){
+  document.documentElement.style.setProperty("--barH", Math.round(bar.getBoundingClientRect().height)+"px");
+}
+if(window.ResizeObserver){ new ResizeObserver(measure).observe(bar); } else { window.addEventListener("resize", measure); }
+
+/* ---------- load data.json ---------- */
+function load(){
+  return fetch(DATA_URL + "?t=" + Date.now(), {cache:"no-store"})
+    .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+    .then(apply)
+    .catch(err=>{
+      console.error(err);
+      $("#syncline").classList.remove("live");
+      $("#syncline").classList.add("stale");
+      $("#synctext").textContent = "โหลดข้อมูลไม่สำเร็จ";
+      if(!D){
+        $("#list").innerHTML = '<div class="empty"><strong>ยังไม่มีข้อมูล</strong>'
+          + 'รอรอบซิงค์แรกจาก Google Sheet หรือกด “รีเฟรช” อีกครั้ง</div>';
+      } else {
+        toast("โหลดข้อมูลใหม่ไม่สำเร็จ — แสดงข้อมูลรอบก่อน");
+      }
+    });
+}
+load();
+</script>
+</body>
+</html>
