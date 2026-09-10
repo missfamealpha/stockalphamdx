@@ -6,94 +6,104 @@
 <title>สต็อก Alpha MDX</title>
 <meta name="description" content="สต็อกอุปกรณ์และน้ำยาตรวจ Alpha MDX — ซิงค์อัตโนมัติจาก Google Sheet">
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="สต็อก Alpha MDX">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#DBDBE5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#21222D" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   :root{
-    --ground:#FCFCF4;
-    --band:#F6F6C9;
-    --band-ink:#1B3050;
-    --band-sub:#5C6B47;
-    --band-kick:#2A6E64;
-    --band-line:#E2E3BE;
+    --ground:#EFEFF4;
+    --band:#DBDBE5;
+    --band-ink:#21222D;
+    --band-sub:#55566A;
+    --band-kick:#5046BB;
+    --band-line:#C6C6D6;
     --card:#FFFFFF;
-    --card-2:#FAFAF2;
-    --ink:#153462;
-    --ink-2:#41597B;
-    --ink-3:#77848C;
-    --line:#E6E7DC;
-    --line-2:#CFD5C4;
-    --accent:#153462;
-    --accent-soft:#E4E9F2;
-    --teal:#2C7D71;
-    --sage:#BAD1C2;
-    --sage-soft:#EAF1EC;
-    --ok:#2C7D71;
+    --card-2:#FAFAFC;
+    --ink:#21222D;
+    --ink-2:#4B4C5E;
+    --ink-3:#63647A;
+    --line:#E5E5EC;
+    --line-2:#DBDBE5;
+    --accent:#5046BB;
+    --accent-soft:#ECEAFB;
+    --teal:#958CE8;
+    --sage:#ACD1FD;
+    --sage-soft:#EDF4FE;
+    --ok:#2F7A6A;
     --low:#8A5E15;
-    --low-soft:#F5EAC8;
-    --out:#A6383B;
-    --out-soft:#F8E3E2;
-    --none:#77848C;
-    --shadow:0 1px 2px rgba(21,52,98,.05), 0 8px 22px -16px rgba(21,52,98,.3);
+    --low-soft:#F6EBCB;
+    --out:#B03A46;
+    --out-soft:#F9E4E6;
+    --on-out:#FFFFFF;
+    --none:#63647A;
+    --shadow:0 1px 2px rgba(33,34,45,.05), 0 8px 22px -16px rgba(33,34,45,.35);
     --barH:150px;
     --r:12px;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --ground:#0A1830;
-      --band:#122747;
-      --band-ink:#F1F2DC;
-      --band-sub:#A9BCA6;
-      --band-kick:#79C6BA;
-      --band-line:#1E3A5F;
-      --card:#132746;
-      --card-2:#0F2140;
-      --ink:#EFF1DC;
-      --ink-2:#B5C6C4;
-      --ink-3:#8B9CA6;
-      --line:#20395C;
-      --line-2:#2C4A73;
-      --accent:#A6C6EC;
-      --accent-soft:#17304F;
-      --teal:#79C6BA;
-      --sage:#4E8577;
-      --sage-soft:#13293D;
-      --ok:#6BC8B2;
-      --low:#DFB55E;
-      --low-soft:#3A2B10;
-      --out:#EE868A;
-      --out-soft:#3A1A1D;
-      --none:#8B9CA6;
+      --ground:#16171E;
+      --band:#21222D;
+      --band-ink:#F3F3F8;
+      --band-sub:#A2A3B4;
+      --band-kick:#ACD1FD;
+      --band-line:#333441;
+      --card:#21222D;
+      --card-2:#1B1C24;
+      --ink:#F3F3F8;
+      --ink-2:#C4C5D3;
+      --ink-3:#9091A3;
+      --line:#333441;
+      --line-2:#454654;
+      --accent:#ACD1FD;
+      --accent-soft:#2A2C44;
+      --teal:#958CE8;
+      --sage:#958CE8;
+      --sage-soft:#26273A;
+      --ok:#5FCBB2;
+      --low:#E0B863;
+      --low-soft:#3A2C11;
+      --out:#F08A93;
+      --out-soft:#3A1A1E;
+      --on-out:#21222D;
+      --none:#9091A3;
       --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -16px rgba(0,0,0,.7);
     }
   }
   :root[data-theme="dark"]{
-    --ground:#0A1830;
-    --band:#122747;
-    --band-ink:#F1F2DC;
-    --band-sub:#A9BCA6;
-    --band-kick:#79C6BA;
-    --band-line:#1E3A5F;
-    --card:#132746;
-    --card-2:#0F2140;
-    --ink:#EFF1DC;
-    --ink-2:#B5C6C4;
-    --ink-3:#8B9CA6;
-    --line:#20395C;
-    --line-2:#2C4A73;
-    --accent:#A6C6EC;
-    --accent-soft:#17304F;
-    --teal:#79C6BA;
-    --sage:#4E8577;
-    --sage-soft:#13293D;
-    --ok:#6BC8B2;
-    --low:#DFB55E;
-    --low-soft:#3A2B10;
-    --out:#EE868A;
-    --out-soft:#3A1A1D;
-    --none:#8B9CA6;
+    --ground:#16171E;
+    --band:#21222D;
+    --band-ink:#F3F3F8;
+    --band-sub:#A2A3B4;
+    --band-kick:#ACD1FD;
+    --band-line:#333441;
+    --card:#21222D;
+    --card-2:#1B1C24;
+    --ink:#F3F3F8;
+    --ink-2:#C4C5D3;
+    --ink-3:#9091A3;
+    --line:#333441;
+    --line-2:#454654;
+    --accent:#ACD1FD;
+    --accent-soft:#2A2C44;
+    --teal:#958CE8;
+    --sage:#958CE8;
+    --sage-soft:#26273A;
+    --ok:#5FCBB2;
+    --low:#E0B863;
+    --low-soft:#3A2C11;
+    --out:#F08A93;
+    --out-soft:#3A1A1E;
+    --on-out:#21222D;
+    --none:#9091A3;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -16px rgba(0,0,0,.7);
   }
 
@@ -115,9 +125,14 @@
   .band{background:var(--band);border-bottom:1px solid var(--band-line)}
   .band .inner{max-width:600px;margin:0 auto;padding:18px 16px 15px}
   .kicker{
-    margin:0 0 6px;color:var(--band-kick);
+    margin:0 0 8px;color:var(--band-kick);
     font-family:"IBM Plex Mono",ui-monospace,monospace;
     font-size:11px;font-weight:600;letter-spacing:.18em;
+    display:flex;align-items:center;gap:9px;
+  }
+  .mark{
+    width:28px;height:28px;flex:0 0 28px;display:block;
+    border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px var(--band-line)
   }
   .band h1{
     font-family:Anuphan,"IBM Plex Sans Thai",system-ui,sans-serif;
@@ -205,7 +220,7 @@
   .row-st .chip .n{margin-left:4px;font-size:11px}
   .row-st .chip[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
   .row-st .chip[aria-pressed="true"] .n{opacity:.7}
-  .row-st .chip[data-stat="need"][aria-pressed="true"]{background:var(--out);color:#fff}
+  .row-st .chip[data-stat="need"][aria-pressed="true"]{background:var(--out);color:var(--on-out)}
   /* secondary row: category */
   .row-ct .chip{font-size:12.5px;padding:5px 11px;background:transparent;border-color:transparent;color:var(--ink-3)}
   .row-ct .chip[aria-pressed="true"]{background:var(--sage-soft);border-color:var(--sage);color:var(--ink)}
@@ -313,7 +328,10 @@
 
 <header class="band">
   <div class="inner">
-    <p class="kicker">ALPHA MDX</p>
+    <p class="kicker">
+      <img class="mark" src="icons/icon-192.png" alt="" width="28" height="28" decoding="async">
+      ALPHA MDX
+    </p>
     <h1>สต็อกอุปกรณ์และน้ำยาตรวจ</h1>
 
     <button class="callout" id="callout" type="button" aria-pressed="false">
